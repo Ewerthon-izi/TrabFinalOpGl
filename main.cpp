@@ -142,36 +142,26 @@ void display() {
 		glColor3d(1, 1, 0.2);
 		glutSolidSphere(25, 100, 100);
 	glPopMatrix(); // end of sun
-
-	glPushMatrix(); // pole
+	//colocar uma imagem dps
+	glPushMatrix(); // street sign
 		glTranslatef(40, -15, 20);
 		glRotatef(90, -1, 0, 0);
 		glColor3d(0.5, 0.5, 0.5);
-		glutSolidCylinder(3, 100, 100, 20);
-	glPopMatrix(); // end of pole
-	//garbage truck
-	glPushMatrix();
-		glTranslatef(20, -15, 20);
-		// parte de baixo do carro
-    	/*
+		glutSolidCylinder(3, 23, 100, 20);
+		glRotatef(-90, 1, 0, 0);
 		glBegin(GL_POLYGON);
-          glColor3f(1, 0, 1);
-          glVertex3f(40.0f,-15.0f,-15.0f);
-          glVertex3f(40.0f,30.0f,-15.0f);
-          glVertex3f(80.0f,30.0f,15.0f);
-          glVertex3f(80.0f,-15.0f,15.0f);
+        	glColor3f(1, 1, 0);
+        	glVertex3f(-5,-35.0f,-25);
+        	glVertex3f(-5,-35.0f,25);  
+       		glVertex3f(5,-20.0f,25);
+			glVertex3f(5,-20.0f,-25);
+		
     	glEnd();
 
-		glBegin(GL_POLYGON);
-          glColor3f(1, 0, 1);
-          glVertex3f(70.0f,-15.0f,-15.0f);
-          glVertex3f(70.0f,30.0f,-15.0f);
-          glVertex3f(110.0f,30.0f,15.0f);
-          glVertex3f(110.0f,-15.0f,15.0f);
-    	glEnd();
-    	*/
-    	
-		glTranslatef(100, 15.5, 20);
+	glPopMatrix(); // end of street sign 
+	//garbage truck
+	glPushMatrix();
+		glTranslatef(120, 0.5, 0);
 		//truck cabin
 		glColor3f(1, 1, 1);
 		glutSolidCube(20);
@@ -180,45 +170,28 @@ void display() {
 		//garbage cabin
 		glutSolidCube(30);
 		glBegin(GL_POLYGON);
-        		glColor3f(0, 1, 0);
-        		glVertex3f(-15.0f,15.0f,15.0f);
-        		glVertex3f(15.0f,15.0f,15.0f);  
-       			glVertex3f(15,-15.0f,30.0f);
+        	glColor3f(0, 1, 0);
+        	glVertex3f(-15.0f,15.0f,15.0f);
+        	glVertex3f(15.0f,15.0f,15.0f);  
+       		glVertex3f(15,-15.0f,30.0f);
 			glVertex3f(-15,-15.0f,30.0f);
 			glVertex3f(-15,15.0f,15.0f);
-    		glEnd();
+    	glEnd();
 		
 		glBegin(GL_POLYGON);
-         		glColor3f(0, 1, 0);
-          		glVertex3f(-15.0f,15.0f,15.0f);
-          		glVertex3f(-15.0f,-15.0f,15.0f);  
-          		glVertex3f(-15,-15.0f,30.0f);
-    		glEnd();
+         	glColor3f(0, 1, 0);
+          	glVertex3f(-15.0f,15.0f,15.0f);
+          	glVertex3f(-15.0f,-15.0f,15.0f);  
+          	glVertex3f(-15,-15.0f,30.0f);
+    	glEnd();
 		glBegin(GL_POLYGON);
-          		glColor3f(0, 1, 0);
-          		glVertex3f( 15.0f,15.0f,15.0f);
-          		glVertex3f( 15.0f,-15.0f,15.0f);  
-          		glVertex3f(15,-15.0f,30.0f);
-    		glEnd();
+          	glColor3f(0, 1, 0);
+          	glVertex3f( 15.0f,15.0f,15.0f);
+          	glVertex3f( 15.0f,-15.0f,15.0f);  
+          	glVertex3f(15,-15.0f,30.0f);
+    	glEnd();
 		//end garbage cabin
-		/*
-		glTranslatef(0, 0, 10);
-		glutSolidCylinder(3,15,6,30);
-		glTranslatef(0, 0, 30);
-		glutSolidCube(30);
-		glTranslatef(0, 0, 10);
-		glutSolidCylinder(3,15,6,30);
-		glTranslatef(0, 0, 30);
-		glutSolidCube(30);
-		glTranslatef(0, 0, 10);
-		glutSolidCylinder(3,15,6,30);
-		glTranslatef(0, 0, 30);
-		glutSolidCube(30);
-		glTranslatef(0, 0, 10);
-		glutSolidCylinder(3,15,6,30);
-		glTranslatef(0, 0, 30);
-		glutSolidCube(30);
-		*/
+
 
 	glPopMatrix();
 
