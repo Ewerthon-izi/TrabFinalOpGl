@@ -149,7 +149,7 @@ void display() {
 		glColor3d(0.5, 0.5, 0.5);
 		glutSolidCylinder(3, 100, 100, 20);
 	glPopMatrix(); // end of pole
-
+	//garbage truck
 	glPushMatrix();
 		glTranslatef(20, -15, 20);
 		// parte de baixo do carro
@@ -172,34 +172,35 @@ void display() {
     	*/
     	
 		glTranslatef(100, 15.5, 20);
+		//truck cabin
 		glColor3f(1, 1, 1);
 		glutSolidCube(20);
 		glTranslatef(0, 2, 20);
 		glColor3f(0, 1, 0);
+		//garbage cabin
 		glutSolidCube(30);
 		glBegin(GL_POLYGON);
-          glColor3f(0, 1, 0);
-          glVertex3f(-15.0f,15.0f,15.0f);
-          glVertex3f(15.0f,15.0f,15.0f);  
-          glVertex3f(15,-15.0f,30.0f);
-		  glVertex3f(-15,-15.0f,30.0f);
-		  glVertex3f(-15,15.0f,15.0f);
-    	glEnd();
+        		glColor3f(0, 1, 0);
+        		glVertex3f(-15.0f,15.0f,15.0f);
+        		glVertex3f(15.0f,15.0f,15.0f);  
+       			glVertex3f(15,-15.0f,30.0f);
+			glVertex3f(-15,-15.0f,30.0f);
+			glVertex3f(-15,15.0f,15.0f);
+    		glEnd();
 		
 		glBegin(GL_POLYGON);
-          glColor3f(0, 1, 0);
-          glVertex3f(-15.0f,15.0f,15.0f);
-          glVertex3f(-15.0f,-15.0f,15.0f);  
-          glVertex3f(-15,-15.0f,30.0f);
-    	glEnd();
-
+         		glColor3f(0, 1, 0);
+          		glVertex3f(-15.0f,15.0f,15.0f);
+          		glVertex3f(-15.0f,-15.0f,15.0f);  
+          		glVertex3f(-15,-15.0f,30.0f);
+    		glEnd();
 		glBegin(GL_POLYGON);
-          glColor3f(0, 1, 0);
-          glVertex3f( 15.0f,15.0f,15.0f);
-          glVertex3f( 15.0f,-15.0f,15.0f);  
-          glVertex3f(15,-15.0f,30.0f);
-    	glEnd();
-
+          		glColor3f(0, 1, 0);
+          		glVertex3f( 15.0f,15.0f,15.0f);
+          		glVertex3f( 15.0f,-15.0f,15.0f);  
+          		glVertex3f(15,-15.0f,30.0f);
+    		glEnd();
+		//end garbage cabin
 		/*
 		glTranslatef(0, 0, 10);
 		glutSolidCylinder(3,15,6,30);
