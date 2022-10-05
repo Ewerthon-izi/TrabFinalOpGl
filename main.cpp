@@ -190,11 +190,37 @@ void display() {
           	glVertex3f( 15.0f,-15.0f,15.0f);  
           	glVertex3f(15,-15.0f,30.0f);
     	glEnd();
+		
 		//end garbage cabin
 
 
 	glPopMatrix();
-
+	glPushMatrix();
+		glColor3f(0.45, 0.20, 0);
+		glTranslatef(72, 1.5, 55);
+		glRotated(40,0,0,40);
+		//body
+		glutSolidCylinder(5,30,4,10);
+		glRotated(-140,0,200,-140);
+		//legs
+		glutSolidCylinder(1.5,10,8,10);
+		glTranslatef(3, 0, 0);
+		glRotatef(-10,30,0,0);
+		glutSolidCylinder(1.5,10,8,10);
+		glTranslatef(13, -20, -10);
+		glutSolidCylinder(1.5,10,8,10);
+		glTranslatef(-5, 0, 0);
+		glutSolidCylinder(1.5,10,8,10);
+		//end legs
+		glRotated(75,0,20,0);
+		glRotated(35,30,0,0);
+		glRotated(35,0,0,90);
+		//neck
+		glutSolidCylinder(1.5,12,8,10);
+		glTranslatef(2,-6,12);
+		//head
+		glutSolidSphere(5,20,25);
+	glPopMatrix();
 	glutSwapBuffers();
 }
 
