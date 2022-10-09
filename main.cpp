@@ -16,7 +16,7 @@ GLfloat incidence = 0;
 GLfloat twist = 0;
 GLfloat angle, fAspect;
 
-GLfloat rotX, rotY, rotX_ini, rotY_ini, mov, jump, movDog, rotateDog;
+GLfloat rotX, rotY, rotX_ini, rotY_ini, mov, jump, movDog, rotateDogY, rotateDogX;
 
 GLfloat obsX, obsY, obsZ, obsX_ini, obsY_ini, obsZ_ini;
 
@@ -75,7 +75,7 @@ void TeclasEspeciais(int tecla, int x, int y) {
 		break;
 	
 	case GLUT_KEY_LEFT:
-		mov += 1; 
+		mov += 1;
 		break;
 	case GLUT_KEY_RIGHT:
 		mov -= 1;
@@ -83,16 +83,64 @@ void TeclasEspeciais(int tecla, int x, int y) {
 		
 	case GLUT_KEY_UP:	
 		if(jump <= 10)
-			jump += 10;
+			jump += 10;	
 		break;
 	case GLUT_KEY_DOWN:	
 		if(jump >= 1.5)
 			jump -= 10;
 		break;
+	case GLUT_KEY_F2:
+		movDog += 1;
+		break;
+
+	case GLUT_KEY_F1:
+		movDog -= 1;
+		break;
+	case GLUT_KEY_F3:
+		rotateDogY += 10;
+		break;
+	case GLUT_KEY_F4:
+		rotateDogX += 10;
+		break;
 	}
 	
 	EspecificaParametrosVisualizacao();
 	glutPostRedisplay();
+}
+
+void myKeyboard(unsigned char c, int x, int y) {
+	switch (c) {
+	case 27: // ESC em ASCII
+		exit(0);
+		break;
+	case 'w':
+		incidence += 2;
+		break;
+	case 's':
+		incidence -= 2;
+		break;
+	case 'z':
+		distance++;
+		break;
+	case 'x':
+		distance--;
+		break;
+	case 'd':
+		azimuth += 5;
+		break;
+	case 'a':
+		azimuth -= 5;
+		break;
+	case 65:
+		rotateDogY += 180;
+		break;
+	case 71:
+		rotateDogY -= 180;
+		break;
+	case 'p':
+		exit(0);
+		break;
+	}
 }
 
 void GerenciaMouse(int button, int state, int x, int y) {
@@ -159,7 +207,7 @@ void display() {
 		glutSolidSphere(25, 100, 100);
 	glPopMatrix(); // end of sun
 	
-	glPushMatrix(); // sun
+	glPushMatrix(); // cloud
 		glTranslatef(60, 120, 0);
 		glColor3d(1, 1, 1);
 		glutSolidSphere(15, 50, 100);
@@ -171,7 +219,7 @@ void display() {
 		glutSolidSphere(15, 50, 100);
 		glTranslatef(0, 10, 5);
 		glutSolidSphere(15, 50, 100);
-	glPopMatrix(); // end of sun
+	glPopMatrix(); // end cloud
 	
 	//colocar uma imagem dps
 	glPushMatrix(); // street sign
@@ -214,25 +262,48 @@ void display() {
 		glRotatef(90,0,90,0);
 		glTranslatef(25,-8,13);
 		glutSolidTorus(3,3,10,30);
-    	glEnd();
+    	glPopMatrix();
     	glPushMatrix();	
-    		glColor3f(0,0,0);
+    		glColor3f(1,1,1);
+		glRotatef(3, 0,30,0);
+		glTranslatef(17,-8,0);
+		glutSolidCylinder(1.5,10,8,10);
+    	glPopMatrix();
+    	glPushMatrix();
+    		glColor3f(0,0,0);	
+		glTranslatef(-12,-8,-26);
 		glRotatef(90,0,90,0);
-		glTranslatef(25,-8,-13);
 		glutSolidTorus(3,3,10,30);
-    	glEnd();
+    	glPopMatrix();
     	glPushMatrix();	
-    		glColor3f(0,0,0);
+    		glColor3f(1,1,1);
+		glTranslatef(-14,-8,-31);
+		glutSolidCylinder(1.5,10,8,10);
+    	glPopMatrix();
+    	glPushMatrix();
+    		glColor3f(0,0,0);	
 		glRotatef(90,0,90,0);
 		glTranslatef(-5,-8,15);
 		glutSolidTorus(3,3,10,30);
-    	glEnd();
+    	glPopMatrix();
+    	glPushMatrix();	
+    		glColor3f(1,1,1);
+		glRotatef(90,0,0,0);
+		glTranslatef(-17,-8,0);
+		glutSolidCylinder(1.5,10,8,10);
+    	glPopMatrix();
     	glPushMatrix();	
     		glColor3f(0,0,0);
 		glRotatef(90,0,90,0);
 		glTranslatef(-5,-8,-15);
 		glutSolidTorus(3,3,10,30);
-    	glEnd();
+    	glPopMatrix();
+    	glPushMatrix();	
+    		glColor3f(1,1,1);
+		glRotatef(90,0,0,0);
+		glTranslatef(15,-8,-30);
+		glutSolidCylinder(1.5,10,8,10);
+    	glPopMatrix();
     	//End wheels		
 		glBegin(GL_POLYGON);
          	glColor3f(0, 1, 0);
@@ -251,8 +322,11 @@ void display() {
 	//start dog/capybara
 	glPushMatrix();
 		glColor3f(0.45, 0.20, 0);
-		glTranslatef(72, jump + 1.5, 55);
-		glRotated(40,0,0,rotateDog + 40);
+		glTranslatef(72, jump + (-1.5), movDog + 55);
+		glRotated(40,0,0,40);
+		glRotated(40+rotateDogY,1,0,0);
+		glRotated(40+rotateDogX,1,1,0);
+		glRotated(40,-2,0,0);
 		//body
 		glutSolidCylinder(5,30,4,10);
 		glRotated(-140,0,200,-140);
@@ -284,59 +358,6 @@ void myReshape(int winWidth, int winHeight) {
 	glViewport(0, 0, tam, tam); // reset the viewport
 }
 
-/*comandos especiais do teclado*/
-void keySpecial(int key, int x, int y) {
-	std::cout << "(" << x << ", " << y << ")" << std::endl;
-	switch (key)
-	{
-	case GLUT_KEY_LEFT:
-		std::cout << "Left pressed\n" << std::endl;
-		mov -= 1; 
-		break;
-	case GLUT_KEY_RIGHT:
-		mov += 1;
-		std::cout << "Up pressed\n" << std::endl;
-		break;
-	}
-
-	if (glutGetModifiers() == GLUT_ACTIVE_ALT) // GLUT_ACTIVE_CTRL ou SHIFT
-		std::cout << "Alt pressed\n";
-}
-
-void myKeyboard(unsigned char c, int x, int y) {
-	switch (c) {
-	case 27: // ESC em ASCII
-		exit(0);
-		break;
-	case 'w':
-		incidence += 2;
-		break;
-	case 's':
-		incidence -= 2;
-		break;
-	case 'z':
-		distance++;
-		break;
-	case 'x':
-		distance--;
-		break;
-	case 'd':
-		azimuth += 5;
-		break;
-	case 'a':
-		azimuth -= 5;
-		break;
-	case 'e':
-		rotateDog += 5;
-		break;
-	case 'q':
-		rotateDog -= 5;
-		break;
-	case 'p':
-		exit(0);
-		break;
-	}
-}
 
 // imprimir as coordenadas com o clique do mouse
 void myMouse(int b, int s, int x, int y) {
@@ -369,7 +390,8 @@ void init() {
 	obsZ = 400;
 	mov = 0;
 	jump = 0;
-	rotateDog = 0;
+	rotateDogY = 0;
+	rotateDogX = 0;
 }
 
 int main(int argc, char **argv) {
