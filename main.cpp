@@ -16,7 +16,7 @@ GLfloat incidence = 0;
 GLfloat twist = 0;
 GLfloat angle, fAspect;
 
-GLfloat rotX, rotY, rotX_ini, rotY_ini;
+GLfloat rotX, rotY, rotX_ini, rotY_ini, mov, jump, movDog, rotateDog;
 
 GLfloat obsX, obsY, obsZ, obsX_ini, obsY_ini, obsZ_ini;
 
@@ -73,8 +73,24 @@ void TeclasEspeciais(int tecla, int x, int y) {
 	case GLUT_KEY_END:
 		if (angle <= 150) angle += 5;
 		break;
+	
+	case GLUT_KEY_LEFT:
+		mov += 1; 
+		break;
+	case GLUT_KEY_RIGHT:
+		mov -= 1;
+		break;
+		
+	case GLUT_KEY_UP:	
+		if(jump <= 10)
+			jump += 10;
+		break;
+	case GLUT_KEY_DOWN:	
+		if(jump >= 1.5)
+			jump -= 10;
+		break;
 	}
-
+	
 	EspecificaParametrosVisualizacao();
 	glutPostRedisplay();
 }
@@ -138,10 +154,25 @@ void display() {
 	glPopMatrix(); // end of ground
 
 	glPushMatrix(); // sun
-		glTranslatef(20, 150, 100);
+		glTranslatef(120, 120,mov + (-50));
 		glColor3d(1, 1, 0.2);
 		glutSolidSphere(25, 100, 100);
 	glPopMatrix(); // end of sun
+	
+	glPushMatrix(); // sun
+		glTranslatef(60, 120, 0);
+		glColor3d(1, 1, 1);
+		glutSolidSphere(15, 50, 100);
+		glTranslatef(10, 0, 10);
+		glutSolidSphere(15, 50, 100);
+		glTranslatef(0, 10, -5);
+		glutSolidSphere(15, 50, 100);
+		glTranslatef(-20, 0, -20);
+		glutSolidSphere(15, 50, 100);
+		glTranslatef(0, 10, 5);
+		glutSolidSphere(15, 50, 100);
+	glPopMatrix(); // end of sun
+	
 	//colocar uma imagem dps
 	glPushMatrix(); // street sign
 		glTranslatef(40, -15, 20);
@@ -161,7 +192,7 @@ void display() {
 	glPopMatrix(); // end of street sign 
 	//garbage truck
 	glPushMatrix();
-		glTranslatef(120, 0.5, 0);
+		glTranslatef(120, 0.5, mov +0);
 		//truck cabin
 		glColor3f(1, 1, 1);
 		glutSolidCube(20);
@@ -173,11 +204,36 @@ void display() {
         	glColor3f(0, 1, 0);
         	glVertex3f(-15.0f,15.0f,15.0f);
         	glVertex3f(15.0f,15.0f,15.0f);  
-       		glVertex3f(15,-15.0f,30.0f);
-			glVertex3f(-15,-15.0f,30.0f);
-			glVertex3f(-15,15.0f,15.0f);
+       	glVertex3f(15,-15.0f,30.0f);
+		glVertex3f(-15,-15.0f,30.0f);
+		glVertex3f(-15,15.0f,15.0f);
+	glEnd();
+	//wheels
+	glPushMatrix();	
+    		glColor3f(0,0,0);
+		glRotatef(90,0,90,0);
+		glTranslatef(25,-8,13);
+		glutSolidTorus(3,3,10,30);
     	glEnd();
-		
+    	glPushMatrix();	
+    		glColor3f(0,0,0);
+		glRotatef(90,0,90,0);
+		glTranslatef(25,-8,-13);
+		glutSolidTorus(3,3,10,30);
+    	glEnd();
+    	glPushMatrix();	
+    		glColor3f(0,0,0);
+		glRotatef(90,0,90,0);
+		glTranslatef(-5,-8,15);
+		glutSolidTorus(3,3,10,30);
+    	glEnd();
+    	glPushMatrix();	
+    		glColor3f(0,0,0);
+		glRotatef(90,0,90,0);
+		glTranslatef(-5,-8,-15);
+		glutSolidTorus(3,3,10,30);
+    	glEnd();
+    	//End wheels		
 		glBegin(GL_POLYGON);
          	glColor3f(0, 1, 0);
           	glVertex3f(-15.0f,15.0f,15.0f);
@@ -190,15 +246,13 @@ void display() {
           	glVertex3f( 15.0f,-15.0f,15.0f);  
           	glVertex3f(15,-15.0f,30.0f);
     	glEnd();
-		
-		//end garbage cabin
-
-
 	glPopMatrix();
+	//end garbage cabin
+	//start dog/capybara
 	glPushMatrix();
 		glColor3f(0.45, 0.20, 0);
-		glTranslatef(72, 1.5, 55);
-		glRotated(40,0,0,40);
+		glTranslatef(72, jump + 1.5, 55);
+		glRotated(40,0,0,rotateDog + 40);
 		//body
 		glutSolidCylinder(5,30,4,10);
 		glRotated(-140,0,200,-140);
@@ -221,6 +275,7 @@ void display() {
 		//head
 		glutSolidSphere(5,20,25);
 	glPopMatrix();
+	//end dog/capybara
 	glutSwapBuffers();
 }
 
@@ -236,8 +291,10 @@ void keySpecial(int key, int x, int y) {
 	{
 	case GLUT_KEY_LEFT:
 		std::cout << "Left pressed\n" << std::endl;
+		mov -= 1; 
 		break;
-	case GLUT_KEY_UP:
+	case GLUT_KEY_RIGHT:
+		mov += 1;
 		std::cout << "Up pressed\n" << std::endl;
 		break;
 	}
@@ -270,10 +327,10 @@ void myKeyboard(unsigned char c, int x, int y) {
 		azimuth -= 5;
 		break;
 	case 'e':
-		twist += 5;
+		rotateDog += 5;
 		break;
 	case 'q':
-		twist -= 5;
+		rotateDog -= 5;
 		break;
 	case 'p':
 		exit(0);
@@ -305,11 +362,14 @@ void init() {
 	glShadeModel(GL_FLAT);
 
 	angle = 45;
-	rotX = 0;
-	rotY = 10;
-	obsX = 20;
+	rotX = 10;
+	rotY = -110;
+	obsX = -50;
 	obsY = 0;
 	obsZ = 400;
+	mov = 0;
+	jump = 0;
+	rotateDog = 0;
 }
 
 int main(int argc, char **argv) {
